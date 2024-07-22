@@ -3,6 +3,7 @@
 #include<cassert>
 #include<numbers>
 #include"Player.h"
+#include"MapChipField.h"
 #include"Input.h"
 #include"DirectXCommon.h"
 #include"Easing.h"
@@ -182,8 +183,8 @@ const Vector3 & Player::GetVerosity()
 {
  return velocity_;
 }
-void Player::SetMapChipField(MapChipField * mapChipField_)
+void Player::SetMapChipField(MapChipField *newMapChipField_)
 {
 	
-	mapChipField_;
+	 mapChipField_ = newMapChipField_;
 }

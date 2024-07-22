@@ -17,6 +17,7 @@ public:
 		kLeftTop,
 		kNumCorner
 	};
+	//天井衝突フラグ、着地フラグ、壁接触フラグ、Vector3型移動量
 	struct CollisionMapinfo {
 
 	};
@@ -50,7 +51,7 @@ public:
 	WorldTransform& GetWorldTransform();
 	const Vector3& GetVerosity();
 
-	 void SetMapChipField(MapChipField* mapChipField_);
+	 void SetMapChipField(MapChipField* newMapChipField_);
 
 private:
 	//キャラクター当たり判定のサイズ
