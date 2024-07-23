@@ -148,6 +148,9 @@ void Player::CheckMapCollisionUp(CollisionMapInfo& info) {
 				indexSet = mapChipField_->GetMapChipIndexSetByPosition(worldTransform_.translation_+info.move.y = Vector3(0,+kHeight/2.0f,0));
 				MapChipField::Rect rect=mapChipField_->GetRectByIndex(indexSet.xindex,indexSet.yindex);
 				info.move.y = std::max(0.0f,velocity_.y);
+				info.ceiling = true;
+
+
 
 
 

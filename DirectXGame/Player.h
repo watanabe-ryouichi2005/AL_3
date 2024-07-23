@@ -53,6 +53,7 @@ private:
 	//キャラクター当たり判定のサイズ
 	static inline const float kWidth = 8.0f;
 	static inline const float kHeight = 8.0f;
+	static inline const float kBlank  = 0.4f;
 
 	//マップチップによるフィールド
 	MapChipField* mapChipField_ = nullptr;
