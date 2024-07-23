@@ -12,13 +12,26 @@ struct MapChipData {
 };
 class MapChipField {
 public:
+struct IndexSet {
+	uint32_t xindex;
+	uint32_t yindex;
+
+};
+struct Rect {
+	float left;
+	float right;
+	float bottom;
+	float top;
+};
 	void ResetMapChipData();
 	void LoadMapChipCsv(const std::string& filepath);
 	MapChipType GetMapChipTypeByIndex(uint32_t xindex, uint32_t yindex);
-	Vector3 GetMapChipPositionTypeByIndex(uint32_t xindex, uint32_t yindex);
+	MapChipType GetMapChipTypeByPosition(const Vector3& positio);
+	IndexSet GetMapChipIndexSetByPosition(const Vector3& position);
+	Vector3 GetMapChipPositionByIndex(uint32_t xindex, uint32_t yindex);
 	uint32_t GetkNumBlockVirtical();
 	uint32_t GetkNumBlockHorizontal();
-
+	Rect GetRectByIndex(uint32_t xindex,uint32_t yindex);
 private:
 	// １ブロックのサイズ
 	static inline const float kBlockWidth = 1.0f;

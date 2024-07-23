@@ -17,10 +17,6 @@ public:
 		kLeftTop,
 		kNumCorner
 	};
-	//天井衝突フラグ、着地フラグ、壁接触フラグ、Vector3型移動量
-	struct CollisionMapinfo {
-
-	};
 	//typedef struct AABB {
 	//	Vector3 min;
 	//	Vector3 max;
@@ -56,7 +52,7 @@ public:
 private:
 	//キャラクター当たり判定のサイズ
 	static inline const float kWidth = 8.0f;
-	static inline const float kheight = 8.0f;
+	static inline const float kHeight = 8.0f;
 
 	//マップチップによるフィールド
 	MapChipField* mapChipField_ = nullptr;
@@ -95,4 +91,22 @@ private:
 	static inline const float kLimitFallSpeed = 0.2f;
 	// ジャンプ初速（上方向）
 	static inline const float kJumpAcceleration = 0.7f;
+	//天井衝突フラグ、着地フラグ、壁接触フラグ、Vector3型移動量
+	struct CollisionMapInfo {
+		bool ceiling = false;
+		bool landing = false;
+		bool hitWall = false;
+		Vector3  move;
+		
+	};
+	void inputMove();
+	void CheckMapCollision(CollisionMapInfo& info);
+	void CheckMapCollisionUp(CollisionMapInfo& info);
+	void CheckMapCollisionDown(CollisionMapInfo& info);
+	void CheckMapCollisionRight(CollisionMapInfo& info);
+	void CheckMapCollisionLeft(CollisionMapInfo& info);
+	void UpdateOnGround(CollisionMapInfo& info);
+	void AnimateTurn();
+	Vector3 CornerPosition(const Vector3& center,Corner corner);
+
 };

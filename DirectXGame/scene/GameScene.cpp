@@ -40,7 +40,7 @@ void GameScene::Initialize() {
 	player_ = new Player();
 	skydome_ = new Skydome();
 
-	Vector3 playerposition_ = mapChipField_->GetMapChipPositionTypeByIndex(2, 18);
+	Vector3 playerposition_ = mapChipField_->GetMapChipPositionByIndex(2, 18);
 	CameraController::Rect cameraArea = {12.0f,100-12.0f,6.0f,6.0f};
 	cameraController_->SetMovableArea( cameraArea);
 	cameraController_->Initialize();
@@ -90,7 +90,7 @@ void GameScene::GenerateBlocks() {
 				worldTransform->Initialize();
 				worldTransformBlocks_[i][j] = worldTransform;
 				worldTransformBlocks_[i][j]->translation_ =
-				    mapChipField_->GetMapChipPositionTypeByIndex(j, i);
+				    mapChipField_->GetMapChipPositionByIndex(j, i);
 
 				//} else {
 				// worldTransformBlocks_[i][j] = nullptr;
