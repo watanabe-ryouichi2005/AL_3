@@ -2,11 +2,14 @@
 #include<algorithm>
 #include<cassert>
 #include<numbers>
+#include"MyMath.h"
+#include"Vector3.h"
 #include"Player.h"
 #include"MapChipField.h"
 #include"Input.h"
 #include"DirectXCommon.h"
 #include"Easing.h"
+
 
 //uint32_t textureHandle 
 void Player::Initialize(ViewProjection* viewProjection,const Vector3 position) {
@@ -36,7 +39,7 @@ collisionMapinfo.hitWall = false;
 //マップ衝突チェック
 CheckMapCollision(collisionMapinfo);
 //移動
- worldTransform_.translation_  += collisionMapinfo.move;
+ worldTransform_.translation_ += collisionMapinfo.move;
 
  //天井接触による落下開始
  if (collisionMapinfo.ceiling) {
@@ -90,9 +93,9 @@ CheckMapCollision(collisionMapinfo);
 		}
 	}
 	//接地判定
-	UpdateOnGround(collisionMapinfo);
+//	UpdateOnGround(collisionMapinfo);
 	//旋回制御
-	AnimateTurn();
+//y	AnimateTurn();
 
 	// 行列計算
 	worldTransform_.UpdetaMatrix();
@@ -103,9 +106,9 @@ CheckMapCollision(collisionMapinfo);
 }
 void Player::CheckMapCollision(CollisionMapInfo& info) {
 	CheckMapCollisionUp(info);
-	CheckMapCollisionDown(info);
-	CheckMapCollisionRight(info);
-	CheckMapCollisionLeft(info);
+//	CheckMapCollisionDown(info);
+//	CheckMapCollisionRight(info);
+//	CheckMapCollisionLeft(info);
 }
 void Player::CheckMapCollisionUp(CollisionMapInfo& info) {
 	//上昇する？
@@ -144,10 +147,10 @@ void Player::CheckMapCollisionUp(CollisionMapInfo& info) {
 			MapChipField::IndexSet indexSetNow;
 			indexSetNow = mapChipField_->GetMapChipIndexSetByPosition(worldTransform_.translation_ + Vector3 (0,+kHeight/2.0f,0));
 			if (indexSetNow.yindex != indexSet.yindex) {
-				//めり込みを排除する方向に移動量を設定する
-				indexSet = mapChipField_->GetMapChipIndexSetByPosition(worldTransform_.translation_+info.move.y = Vector3(0,+kHeight/2.0f,0));
+				//めり込みを排除する方向に移動量を設定する 
+				indexSet = mapChipField_->GetMapChipIndexSetByPosition(worldTransform_.translation_ + info.move.y + Vector3(0,+kHeight/2.0f,0));
 				MapChipField::Rect rect=mapChipField_->GetRectByIndex(indexSet.xindex,indexSet.yindex);
-				info.move.y = std::max(0.0f,velocity_.y);
+				info.move.y = std::max(0.0f,rect.bottom-worldTransform_.translation_.y-(kHeight/2.0f+kBlank));
 				info.ceiling = true;
 
 
@@ -160,7 +163,28 @@ void Player::CheckMapCollisionUp(CollisionMapInfo& info) {
 			}
 
 		}
+		
 	
+
+}
+void Player::CheckMapCollisionDown(CollisionMapInfo & info)
+{
+	if (info.move.y >= 0) {
+		return ;
+	}
+
+	std::array<Vector3,kNumCorner>positionNew;
+	for (uint32_t i = 0; i < positionNew.size(); ++i) {
+		positionNew[i];
+		CornerPosition(worldTransform_.translation_+info.move,static_cast<Corner>(i));
+
+	}
+	MapChipType mapChipType;
+	MapChipType mapChipTypeNext;
+	bool hit = false;
+	//真下の当たり判定を行う
+	//左下点
+
 
 }
 void Player::Draw() {
