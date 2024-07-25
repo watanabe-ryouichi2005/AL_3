@@ -167,26 +167,26 @@ void Player::CheckMapCollisionUp(CollisionMapInfo& info) {
 	
 
 }
-void Player::CheckMapCollisionDown(CollisionMapInfo & info)
-{
-	if (info.move.y >= 0) {
-		return ;
-	}
-
-	std::array<Vector3,kNumCorner>positionNew;
-	for (uint32_t i = 0; i < positionNew.size(); ++i) {
-		positionNew[i];
-		CornerPosition(worldTransform_.translation_+info.move,static_cast<Corner>(i));
-
-	}
-	MapChipType mapChipType;
-	MapChipType mapChipTypeNext;
-	bool hit = false;
-	//真下の当たり判定を行う
-	//左下点
-
-
-}
+//void Player::CheckMapCollisionDown(CollisionMapInfo & info)
+//{
+//	/*if (info.move.y >= 0) {
+//		return ;
+//	}
+//
+//	std::array<Vector3,kNumCorner>positionNew;
+//	for (uint32_t i = 0; i < positionNew.size(); ++i) {
+//		positionNew[i];
+//		CornerPosition(worldTransform_.translation_+info.move,static_cast<Corner>(i));
+//
+//	}
+//	MapChipType mapChipType;
+//	MapChipType mapChipTypeNext;
+//	bool hit = false;*/
+//	//真下の当たり判定を行う
+//	//左下点
+//
+//
+//}
 void Player::Draw() {
 	// 3Dモデルを描画
 	model_->Draw(worldTransform_, *viewProjection_);
