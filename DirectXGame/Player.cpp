@@ -93,7 +93,7 @@ CheckMapCollision(collisionMapinfo);
 		}
 	}
 	//接地判定
-//	UpdateOnGround(collisionMapinfo);
+	UpdateOnGround(collisionMapinfo);
 	//旋回制御	
 	// AnimateTurn();
 
@@ -327,6 +327,7 @@ Vector3 Player::CornerPosition(const Vector3& center, Corner corner)
 
 return center + offsetTable[static_cast<uint32_t>(corner)]; 
 }
+
 WorldTransform& Player::GetWorldTransform() {
 	return worldTransform_;
 }
@@ -338,4 +339,54 @@ void Player::SetMapChipField(MapChipField *newMapChipField_)
 {
 	
 	 mapChipField_ = newMapChipField_;
+}
+void Player::UpdateOnGround(CollisionMapInfo & info)
+{
+	//std::array<Vector3,kNumCorner>positionNew;
+			std::array<Vector3,kNumCorner> positionNew;
+	if (onGround_) {
+		//ジャンプ開始
+		if (velocity_.y > 0.0f) {
+			onGround_ = false;
+		}
+		else {
+			for (uint32_t i = 0; i < positionNew.size(); ++i) {
+				positionNew[i] = CornerPosition(worldTransform_.translation_ + info.move,static_cast<Corner>(i));
+				}
+		}
+	}
+	//スライドではhit
+	bool ground = false;
+	MapChipType mapChipType;
+	MapChipType mapChipTypeNext;
+	//左下点の判定
+	MapChipField::IndexSet indexSet;
+	indexSet = mapChipField_->GetMapChipIndexSetByPosition(positionNew[kLeftBottom]) ;
+	mapChipType = mapChipField_ -> GetMapChipTypeByIndex(indexSet.xindex,indexSet.yindex);
+	mapChipTypeNext = mapChipField_->GetMapChipTypeByIndex(indexSet.xindex,indexSet.yindex-1);
+	if (mapChipType == MapChipType::kBlock && mapChipTypeNext != MapChipType::kBlock) {
+		ground = true;
+	}
+	
+	//右下点の判定
+	indexSet = mapChipField_-> GetMapChipIndexSetByPosition(positionNew[kRightBottom]);
+	mapChipType = mapChipField_->GetMapChipTypeByIndex(indexSet.xindex,indexSet.yindex);
+	mapChipTypeNext = mapChipField_->GetMapChipTypeByIndex(indexSet.xindex,indexSet.yindex-1);
+	if (mapChipType == MapChipType::kBlock && mapChipTypeNext != MapChipType::kBlock) {
+	ground = true;
+	}
+	
+	
+	
+	
+	
+	//着地フラグ
+	if (info.landing) {
+		//着地状態に切り替える（落下を止める）
+		onGround_ = true;
+		//着地時にX速度を減速
+		velocity_.x *=(1.0f - kAttenuationLanding);
+		//Y速度をゼロにする
+		velocity_.y = 0.0f;
+	}
 }
