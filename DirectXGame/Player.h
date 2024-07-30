@@ -51,9 +51,18 @@ public:
 
 private:
 	//キャラクター当たり判定のサイズ
-	static inline const float kWidth = 8.0f;
-	static inline const float kHeight = 8.0f;
+	static inline const float kWidth = 0.8f;
+	static inline const float kHeight = 0.8f;
 	static inline const float kBlank  = 0.4f;
+	//static inline const float kTimeTurn  = 0.3f;
+	static inline const float kAcceleration = 0.1f;
+	//static inline const float kJumpAcceleration = 20.0f;
+	//static inline const float kGravityAcceleration = 0.98f;
+	static inline const float kLimitRunSpeed = 0.5f;
+	//static inline const float kLimitFallSpeed = 0.5f;
+	static inline const float kAttenuation = 0.1f;
+	static inline const float kAttenuationWall = 0.2f;
+	static inline const float kAttenuationLanding = 0.0f;
 
 	//マップチップによるフィールド
 	MapChipField* mapChipField_ = nullptr;
@@ -68,9 +77,6 @@ private:
 
 	Vector3 velocity_ = {};
 
-	static inline const float kAcceleration = 0.01f;
-	static inline const float kAttenuation = 0.01f;
-	static inline const float kLimitRunSpeed = 2.0f;
 
 	LRDirection lrDirection_ = LRDirection::kRight;
 
@@ -87,9 +93,9 @@ private:
 	// 着地フラグ
 	bool landing = false;
 	// 重力加速度（下方向）
-	static inline const float kGravityAcceleration = 0.05f;
+	static inline const float kGravityAcceleration = 0.08f;
 	// 最大落下速度（下方向）
-	static inline const float kLimitFallSpeed = 0.2f;
+	static inline const float kLimitFallSpeed = 0.07f;
 	// ジャンプ初速（上方向）
 	static inline const float kJumpAcceleration = 0.7f;
 	//天井衝突フラグ、着地フラグ、壁接触フラグ、Vector3型移動量
