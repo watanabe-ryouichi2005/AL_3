@@ -129,37 +129,36 @@ void Player::CheckMapCollisionUp(CollisionMapInfo& info) {
 	indexSet = mapChipField_->GetMapChipIndexSetByPosition(positionNew[kLeftTop]);
 	mapChipType = mapChipField_->GetMapChipTypeByIndex(indexSet.xindex,indexSet.yindex);
 	mapChipTypeNext = mapChipField_->GetMapChipTypeByIndex(indexSet.xindex,indexSet.yindex+1);
-	if (mapChipType == MapChipType::kBlock && mapChipTypeNext != MapChipType::kBlock) {
+	if (mapChipType == MapChipType::kBlock&&mapChipTypeNext != MapChipType::kBlock ) {
 		hit = true;
 		
 	}
-		//右上点の判定
-		indexSet = mapChipField_->GetMapChipIndexSetByPosition(positionNew[kRightTop]);
-		mapChipType =  mapChipField_->GetMapChipTypeByIndex(indexSet.xindex,indexSet.yindex);
-		mapChipTypeNext =  mapChipField_->GetMapChipTypeByIndex(indexSet.xindex,indexSet.yindex+1);
+	//右上点の判定
+	indexSet = mapChipField_->GetMapChipIndexSetByPosition(positionNew[kRightTop]);
+	mapChipType =  mapChipField_->GetMapChipTypeByIndex(indexSet.xindex,indexSet.yindex);
+	mapChipTypeNext =  mapChipField_->GetMapChipTypeByIndex(indexSet.xindex,indexSet.yindex+1);
 		
-		if (mapChipType == MapChipType::kBlock && mapChipTypeNext != MapChipType::kBlock) {
-		hit = true;
+	if (mapChipType == MapChipType::kBlock&&mapChipTypeNext !=MapChipType::kBlock ) {
+	hit = true;
 		
-		}
-		//ブロックにヒット
-		if (hit) {
-			//現在座標が壁の外か判定
-			MapChipField::IndexSet indexSetNow;
-			indexSetNow = mapChipField_->GetMapChipIndexSetByPosition(worldTransform_.translation_ + Vector3 (0,+kHeight/2.0f,0));
+	}
+	//ブロックにヒット
+	if (hit) {
+		//現在座標が壁の外か判定
+		MapChipField::IndexSet indexSetNow;
+		indexSetNow = mapChipField_->GetMapChipIndexSetByPosition(worldTransform_.translation_ + Vector3 (0,+kHeight/2.0f,0));
 			if (indexSetNow.yindex != indexSet.yindex) {
 				//めり込みを排除する方向に移動量を設定する 
 				indexSet = mapChipField_->GetMapChipIndexSetByPosition(worldTransform_.translation_ + info.move.y + Vector3(0,+kHeight/2.0f,0));
+				//めり込み先ブロックの範囲矩形
 				MapChipField::Rect rect=mapChipField_->GetRectByIndex(indexSet.xindex,indexSet.yindex);
+				//移動量Y＝上にいるブロックの下端ープレイヤーY座標ープレイヤーの高さ/２＋ブランク
 				info.move.y = std::max(0.0f,rect.bottom-worldTransform_.translation_.y-(kHeight/2.0f+kBlank));
 				info.ceiling = true;
 			}
 
 		}
-		if (info.ceiling ==true) {
-			DebugText::GetInstance()->ConsolePrintf("hit ceiling\n");
-			velocity_.y = 0;
-		}
+		
 
 }
 //void Player::CheckMapCollisionDown(CollisionMapInfo & info)
@@ -303,7 +302,7 @@ void Player::inputMove() {
 			// ジャンプ初速
 			//			velocity_ += Vector3(0, kJumpAcceleration, 0);
 			velocity_.x += 0;
-			velocity_.y += kJumpAcceleration;
+			velocity_.y += kJumpAcceleration/60.0f;
 			velocity_.z += 0;
 		}
 
@@ -313,7 +312,7 @@ void Player::inputMove() {
 	 // 落下速度
 	 //		velocity_ += Vector3(0, -kGravityAcceleration, 0);
 	 velocity_.x += 0;
-	 velocity_.y += -kGravityAcceleration;
+	 velocity_.y += -kGravityAcceleration/60.0f;
 	 velocity_.z += 0;
 	 // 落下速度制限
 	 velocity_.y = std::max(velocity_.y, -kLimitFallSpeed);
