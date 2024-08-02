@@ -311,7 +311,7 @@ void Player::inputMove() {
 	 // 落下速度
 	 //		velocity_ += Vector3(0, -kGravityAcceleration, 0);
 	 velocity_.x += 0;
-	 velocity_.y += -kGravityAcceleration/60;
+	 velocity_.y += -kGravityAcceleration/60.0f,0;
 	 velocity_.z += 0;
 	 // 落下速度制限
 	 velocity_.y = std::max(velocity_.y, -kLimitFallSpeed);
