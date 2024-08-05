@@ -13,7 +13,7 @@ GameScene::GameScene() {
 
 GameScene::~GameScene() {
 	
-	delete player_, delete model_, delete modelBlock_, delete debugCamera_,
+	delete enemy_,delete player_, delete model_, delete modelBlock_, delete debugCamera_,
 	    delete mapChipField_,delete modelSkydome_,delete cameraController_;
 	for (std::vector<WorldTransform*>& worldTransformBlockLine : worldTransformBlocks_)
 		for (WorldTransform* worldTrandformBlock : worldTransformBlockLine) {
@@ -30,6 +30,7 @@ void GameScene::Initialize() {
 	textureHandle_ = TextureManager::Load("mario.jpg");
 	model_ = Model::Create();
 	modelPlayer_ = Model::CreateFromOBJ("player");
+	modelEnemy_ = Model::CreateFromOBJ("enemy");
 	modelBlock_ = Model::CreateFromOBJ("block");
 	modelSkydome_ = Model::CreateFromOBJ("sphere", true);
 	worldTransform_.Initialize();
@@ -38,9 +39,11 @@ void GameScene::Initialize() {
 	cameraController_ = new CameraController();
 	mapChipField_ = new MapChipField;
 	player_ = new Player();
+	enemy_ = new Enemy();
 	skydome_ = new Skydome();
 
 	Vector3 playerposition_ = mapChipField_->GetMapChipPositionByIndex(2, 18);
+	Vector3 enemyposition_ = mapChipField_->GetMapChipPositionByIndex(2, 28);
 	CameraController::Rect cameraArea = {12.0f,100-12.0f,6.0f,6.0f};
 	cameraController_->SetMovableArea( cameraArea);
 	cameraController_->Initialize();
@@ -49,6 +52,7 @@ void GameScene::Initialize() {
 
 	mapChipField_->LoadMapChipCsv("Resources/map.csv");
 	player_->Initialize(&viewProjection_,playerposition_);
+	enemy_->init(/*&viewProjection_,*/enemyposition_ );
 	//<<<<<<< Updated upstream
 	//=======
 	//<<<<<<< Updated upstream
@@ -66,6 +70,7 @@ void GameScene::Initialize() {
 
 //	player_->Initialize(model_, &viewProjection_,playerposition_ );
 	player_->SetMapChipField(mapChipField_);
+	
 	//<<<<<<< Updated upstream
 	//=======
 	skydome_->Initialize(modelSkydome_, textureHandle_, &viewProjection_);
@@ -128,6 +133,7 @@ void GameScene::Update() {
 
 	debugCamera_->Update();
 	player_->Update();
+	enemy_->Update();
 	cameraController_->Update();
 	// ブロックの更新
 
@@ -166,7 +172,7 @@ void GameScene::Draw() {
 	Model::PreDraw(commandList);
 	skydome_->Draw();
 	player_->Draw();
-
+	enemy_->Draw();
 	/// <summary>
 	/// ここに3Dオブジェクトの描画処理を追加できる
 	

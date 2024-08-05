@@ -12,6 +12,7 @@
 #include "Player.h"
 #include "Skydome.h"
 #include "CameraController.h"
+#include "Enemy.h"
 #include "Sprite.h"
 #include "SafeDelete.h"
 #include "ViewProjection.h"
@@ -57,8 +58,11 @@ private: // メンバ変数
 	Model* modelBlock_ = nullptr;
 	Model* modelSkydome_ = nullptr;
 	Model* modelPlayer_ = nullptr;
+	Model* modelEnemy_ = nullptr;
 	//自キャラ
 	Player* player_ = nullptr;
+	//敵
+	Enemy* enemy_ = nullptr;
 	//スカイドーム
 	Skydome* skydome_ = nullptr;
 	//マップチップフィールド
