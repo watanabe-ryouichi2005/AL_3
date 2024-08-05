@@ -63,6 +63,7 @@ private:
 	static inline const float kAttenuation = 0.05f;
 	static inline const float kAttenuationWall = 0.2f;
 	static inline const float kAttenuationLanding = 0.0f;
+	static inline const float kGroundSearchHeight = 0.06f;
 
 	//マップチップによるフィールド
 	MapChipField* mapChipField_ = nullptr;
@@ -112,7 +113,7 @@ private:
 	void CheckMapCollisionDown(CollisionMapInfo& info);
 	void CheckMapCollisionRight(CollisionMapInfo& info);
 	void CheckMapCollisionLeft(CollisionMapInfo& info);
-	void UpdateOnGround(CollisionMapInfo& info);
+	void UpdateOnGround(const CollisionMapInfo& info);
 	void AnimateTurn();
 	Vector3 CornerPosition(const Vector3& center,Corner corner);
 

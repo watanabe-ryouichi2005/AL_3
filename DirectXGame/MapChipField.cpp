@@ -26,7 +26,6 @@ void MapChipField::ResetMapChipData() {
 	}
 }
 void MapChipField::LoadMapChipCsv(const std::string& filepath) {
-	ResetMapChipData();
 
 	std::ifstream file;
 	file.open(filepath);
@@ -35,9 +34,11 @@ void MapChipField::LoadMapChipCsv(const std::string& filepath) {
 	std::stringstream mapChipCsv;
 	mapChipCsv << file.rdbuf();
 	file.close();
-
+	ResetMapChipData();
+	
+	std::string line;
+	
 	for (uint32_t i = 0; i < kNumBlockVirtical; ++i) {
-		std::string line;
 		getline(mapChipCsv, line);
 		std::istringstream line_stream(line);
 		for (uint32_t j = 0; j < kNumBlockHorizontal; ++j) {
@@ -63,8 +64,8 @@ Vector3 MapChipField::GetMapChipPositionByIndex(uint32_t xindex, uint32_t yindex
 }
 MapChipType MapChipField::GetMapChipTypeByPosition(const Vector3& position)
 {
-	IndexSet indexset =  GetMapChipIndexSetByPosition(position);
-	return GetMapChipTypeByIndex(indexset.xindex,indexset.yindex);
+	IndexSet indexSet =  GetMapChipIndexSetByPosition(position);
+	return GetMapChipTypeByIndex(indexSet.xindex,indexSet.yindex);
 }
 MapChipField::IndexSet MapChipField::GetMapChipIndexSetByPosition(const Vector3& position) {
 	IndexSet indexSet = {};
@@ -76,9 +77,9 @@ MapChipField::Rect MapChipField::GetRectByIndex(uint32_t xindex, uint32_t yindex
 {Vector3 center = GetMapChipPositionByIndex(xindex,yindex);
 Rect rect;
 rect.left = center.x-kBlockWidth/2.0f;
-rect.right = center.y+kBlockWidth/2.0f;
-rect.bottom = center.x-kBlockWidth/2.0f;
-rect.top = center.x-kBlockWidth/2.0f;
+rect.right = center.x+kBlockWidth/2.0f;
+rect.bottom = center.y-kBlockWidth/2.0f;
+rect.top = center.y+kBlockWidth/2.0f;
 
 return rect;
 }
