@@ -66,9 +66,9 @@ private: // メンバ変数
 	//スカイドーム
 	Skydome* skydome_ = nullptr;
 	//マップチップフィールド
-	MapChipField* mapChipField_;
+	MapChipField* mapChipField_ = nullptr;
 	//カメラコントローラー
-	CameraController* cameraController_;
+	CameraController* cameraController_ = nullptr;
 	//テクスチャー
 	uint32_t textureHandle_ = 0;
 	ViewProjection viewProjection_;

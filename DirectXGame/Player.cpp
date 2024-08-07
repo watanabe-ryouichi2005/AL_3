@@ -20,7 +20,6 @@ void Player::Initialize(ViewProjection* viewProjection,const Vector3 position) {
 	worldTransform_.translation_ = position;
 
 	viewProjection_ = viewProjection;
-
 	// 右を向かせる(πとか数値情報が定義されてる)
 	worldTransform_.rotation_.y = std::numbers::pi_v<float> / 2.0f;
 

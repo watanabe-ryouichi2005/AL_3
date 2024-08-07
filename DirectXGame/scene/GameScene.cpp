@@ -13,8 +13,8 @@ GameScene::GameScene() {
 
 GameScene::~GameScene() {
 	
-	delete enemy_,delete player_, delete model_, delete modelBlock_, delete debugCamera_,
-	    delete mapChipField_,delete modelSkydome_,delete cameraController_;
+	delete player_, delete model_, delete modelBlock_, delete debugCamera_,
+	    delete mapChipField_,delete modelSkydome_,delete cameraController_,delete enemy_;
 	for (std::vector<WorldTransform*>& worldTransformBlockLine : worldTransformBlocks_)
 		for (WorldTransform* worldTrandformBlock : worldTransformBlockLine) {
 			delete worldTrandformBlock;
@@ -43,7 +43,7 @@ void GameScene::Initialize() {
 	skydome_ = new Skydome();
 
 	Vector3 playerposition_ = mapChipField_->GetMapChipPositionByIndex(2, 18);
-	Vector3 enemyposition_ = mapChipField_->GetMapChipPositionByIndex(2, 28);
+	Vector3 enemyposition_ = mapChipField_->GetMapChipPositionByIndex(25, 18);
 	CameraController::Rect cameraArea = {12.0f,100-12.0f,6.0f,6.0f};
 	cameraController_->SetMovableArea( cameraArea);
 	cameraController_->Initialize();
@@ -52,7 +52,7 @@ void GameScene::Initialize() {
 
 	mapChipField_->LoadMapChipCsv("Resources/map.csv");
 	player_->Initialize(&viewProjection_,playerposition_);
-	enemy_->init(/*&viewProjection_,*/enemyposition_ );
+	enemy_->init(&viewProjection_,enemyposition_ );
 	//<<<<<<< Updated upstream
 	//=======
 	//<<<<<<< Updated upstream
