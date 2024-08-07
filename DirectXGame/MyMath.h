@@ -1,5 +1,6 @@
 ﻿#include "Vector3.h"
-#include "Matrix4x4.h"
+#include "Matrix4x4.h" 
+#include"AABB.h"
 Matrix4x4 MakeAffineMatrix(const Vector3& scale, const Vector3& rotate, const Vector3& translate);
 
 Matrix4x4 MakeRotateXMatrix(float radian);	
@@ -9,7 +10,7 @@ Matrix4x4 MakeRotateYMatrix(float radian);
 Matrix4x4 MakeRotateZMatrix(float radian);
 
 Matrix4x4 Multiply(const Matrix4x4& m1, const Matrix4x4& m2);
-
+bool IsCollision(const AABB&aabb1,const AABB&aabb2);
 // 単項演算子オーバーロード
 //Vector3 operator+(const Vector3& v);
 //Vector3 operator-(const Vector3& v);

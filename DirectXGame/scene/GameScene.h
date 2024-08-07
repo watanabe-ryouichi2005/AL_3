@@ -49,6 +49,7 @@ public: // メンバ関数
 	/// </summary>
 	void Draw();
 	void GenerateBlocks();
+	void CheckAllCollision();
 private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
 	Input* input_ = nullptr;
@@ -62,7 +63,8 @@ private: // メンバ変数
 	//自キャラ
 	Player* player_ = nullptr;
 	//敵
-	Enemy* enemy_ = nullptr;
+	//Enemy* enemy_ = nullptr;
+	std::list<Enemy*> enemies_;
 	//スカイドーム
 	Skydome* skydome_ = nullptr;
 	//マップチップフィールド

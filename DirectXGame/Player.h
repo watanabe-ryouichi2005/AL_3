@@ -1,7 +1,9 @@
 ﻿#include "Model.h"
 #include "WorldTransform.h"
 #include "ViewProjection.h"
+#include"AABB.h"
 class MapChipField;
+class Enemy;
 class Player {
 public:
 	// 左右
@@ -46,7 +48,9 @@ public:
 
 	WorldTransform& GetWorldTransform();
 	const Vector3& GetVerosity();
-
+	Vector3 GetWorldPosition();
+	AABB GetAABB();
+	 void OnCollision(const Enemy* enemy);
 	 void SetMapChipField(MapChipField* newMapChipField_);
 
 private:

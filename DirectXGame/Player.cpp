@@ -6,6 +6,7 @@
 #include"Vector3.h"
 #include"Player.h"
 #include"MapChipField.h"
+#include"Enemy.h"
 #include"Input.h"
 #include"DirectXCommon.h"
 #include"Easing.h"
@@ -104,6 +105,7 @@ CheckMapCollision(collisionMapinfo);
 
 
 }
+
 void Player::CheckMapCollision(CollisionMapInfo& info) {
 	CheckMapCollisionUp(info);
 CheckMapCollisionDown(info);
@@ -425,6 +427,27 @@ WorldTransform& Player::GetWorldTransform() {
 const Vector3 & Player::GetVerosity()
 {
  return velocity_;
+}
+Vector3 Player::GetWorldPosition() {
+	Vector3 worldPos;
+	worldPos.x = worldTransform_.matWorld_.m[3][0];
+	worldPos.y = worldTransform_.matWorld_.m[3][1];
+	worldPos.z = worldTransform_.matWorld_.m[3][2];
+	return worldPos;
+
+}
+AABB Player::GetAABB() {
+	Vector3 worldPos = GetWorldPosition();
+	AABB aabb;
+	aabb.min = {worldPos.x - kWidth/2.0f,worldPos.y-kHeight/2.0f,worldPos.z-kWidth/2.0f};
+	aabb.max = {worldPos.x + kWidth/2.0f,worldPos.y+kHeight/2.0f,worldPos.z+kWidth/2.0f};
+	return aabb;
+
+}
+void Player::OnCollision(const Enemy * enemy)
+{(void)enemy; 
+velocity_= Vector3(0,kJumpAcceleration/60.0f,0);
+
 }
 void Player::SetMapChipField(MapChipField *newMapChipField_)
 {

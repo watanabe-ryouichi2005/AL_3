@@ -1,14 +1,21 @@
 ﻿#pragma once
+#include"AABB.h"
 #include "Model.h"
 #include "WorldTransform.h"
 #include"ViewProjection.h"
+class Player;
 class Enemy {
 public:
 void init(ViewProjection* viewProjection,const Vector3 position);
 void Update();
 void Draw();
-void Move();
+Vector3 GetWorldPosition();
+AABB GetAABB();
+void OnCollision(Player* player);
 private:
+		static inline const float kWidth = 0.8f;
+	static inline const float kHeight = 0.8f;
+
 // ワールド変換データ
 	WorldTransform worldTransform_;
 	// モデル
