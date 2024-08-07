@@ -11,6 +11,7 @@ Matrix4x4 MakeRotateZMatrix(float radian);
 
 Matrix4x4 Multiply(const Matrix4x4& m1, const Matrix4x4& m2);
 bool IsCollision(const AABB&aabb1,const AABB&aabb2);
+Vector3 Transform(const Vector3& vector,const Matrix4x4& matrix);
 // 単項演算子オーバーロード
 //Vector3 operator+(const Vector3& v);
 //Vector3 operator-(const Vector3& v);

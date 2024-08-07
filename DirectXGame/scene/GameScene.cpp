@@ -15,7 +15,7 @@ GameScene::~GameScene() {
 	for (Enemy* enemy_ : enemies_) {
 		delete enemy_;
 	}
-	delete player_, delete model_, delete modelBlock_, delete debugCamera_,
+delete modelParticle_,delete player_, delete model_, delete modelBlock_, delete debugCamera_,
 	    delete mapChipField_,delete modelSkydome_,delete cameraController_;
 	for (std::vector<WorldTransform*>& worldTransformBlockLine : worldTransformBlocks_)
 		for (WorldTransform* worldTrandformBlock : worldTransformBlockLine) {
@@ -35,6 +35,7 @@ void GameScene::Initialize() {
 	modelEnemy_ = Model::CreateFromOBJ("enemy");
 	modelBlock_ = Model::CreateFromOBJ("block");
 	modelSkydome_ = Model::CreateFromOBJ("sphere", true);
+	modelParticle_=Model::CreateFromOBJ("deathParticle",true);
 	worldTransform_.Initialize();
 	viewProjection_.Initialize();
 
@@ -43,8 +44,10 @@ void GameScene::Initialize() {
 	player_ = new Player();
 	//enemy_ = new Enemy();
 	skydome_ = new Skydome();
-
+	deathParticle_ = new DeathParticle();
 	Vector3 playerposition_ = mapChipField_->GetMapChipPositionByIndex(2, 18);
+	//パーティクルはプレイヤーと同じ座標
+	deathParticle_->Init(&viewProjection_,playerposition_);
 	CameraController::Rect cameraArea = {12.0f,100-12.0f,6.0f,6.0f};
 	cameraController_->SetMovableArea( cameraArea);
 	cameraController_->Initialize();
@@ -52,6 +55,7 @@ void GameScene::Initialize() {
 	cameraController_->Reset();
 
 	mapChipField_->LoadMapChipCsv("Resources/map.csv");
+	//自機と敵
 	player_->Initialize(&viewProjection_,playerposition_);
 	Enemy* newEnemy = new Enemy();
 	Vector3 enemyposition_ = mapChipField_->GetMapChipPositionByIndex(25, 18);
@@ -172,8 +176,12 @@ void GameScene::Update() {
 	enemy->Update();
 
 	}
-
 	CheckAllCollision();
+	if (deathParticle_) {
+		deathParticle_->Update();
+	
+
+	}
 
 }
 
@@ -200,7 +208,12 @@ void GameScene::Draw() {
 	// 3Dオブジェクト描画前処理
 	Model::PreDraw(commandList);
 	skydome_->Draw();
+	//if(!player_IsDead()){}
 	player_->Draw();
+	if (deathParticle_) {
+
+	deathParticle_->Draw();
+	}
 	for (Enemy* enemy : enemies_) {
 
 	enemy->Draw();

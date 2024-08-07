@@ -13,6 +13,7 @@
 #include "Skydome.h"
 #include "CameraController.h"
 #include "Enemy.h"
+#include "DeathParticle.h"
 #include "Sprite.h"
 #include "SafeDelete.h"
 #include "ViewProjection.h"
@@ -51,6 +52,11 @@ public: // メンバ関数
 	void GenerateBlocks();
 	void CheckAllCollision();
 private: // メンバ変数
+	enum class Phase {
+		kPlay,
+		kDeath,
+
+	};
 	DirectXCommon* dxCommon_ = nullptr;
 	Input* input_ = nullptr;
 	Audio* audio_ = nullptr;
@@ -60,6 +66,8 @@ private: // メンバ変数
 	Model* modelSkydome_ = nullptr;
 	Model* modelPlayer_ = nullptr;
 	Model* modelEnemy_ = nullptr;
+	Model* modelParticle_ = nullptr;
+
 	//自キャラ
 	Player* player_ = nullptr;
 	//敵
@@ -71,6 +79,8 @@ private: // メンバ変数
 	MapChipField* mapChipField_ = nullptr;
 	//カメラコントローラー
 	CameraController* cameraController_ = nullptr;
+	DeathParticle* deathParticle_ = nullptr;
+
 	//テクスチャー
 	uint32_t textureHandle_ = 0;
 	ViewProjection viewProjection_;
