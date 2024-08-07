@@ -145,6 +145,7 @@
     <ClInclude Include="base\TextureManager.h" />
     <ClInclude Include="base\WinApp.h" />
     <ClInclude Include="CameraController.h" />
+    <ClInclude Include="DeathObject.h" />
     <ClInclude Include="DeathParticle.h" />
     <ClInclude Include="Easing.h" />
     <ClInclude Include="Enemy.h" />
