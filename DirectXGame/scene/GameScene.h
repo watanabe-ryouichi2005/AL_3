@@ -44,19 +44,24 @@ public: // メンバ関数
 	/// 毎フレーム処理
 	/// </summary>
 	void Update();
-
+	void UpdateCamera();
+	void UpdateBlocks();
 	/// <summary>
 	/// 描画
 	/// </summary>
 	void Draw();
 	void GenerateBlocks();
 	void CheckAllCollision();
+	void ChangePhase();
+	bool IsFinished(){return finished_;};
 private: // メンバ変数
 	enum class Phase {
 		kPlay,
 		kDeath,
 
 	};
+
+	Phase phase_ ;
 	DirectXCommon* dxCommon_ = nullptr;
 	Input* input_ = nullptr;
 	Audio* audio_ = nullptr;
@@ -80,7 +85,6 @@ private: // メンバ変数
 	//カメラコントローラー
 	CameraController* cameraController_ = nullptr;
 	DeathParticle* deathParticle_ = nullptr;
-
 	//テクスチャー
 	uint32_t textureHandle_ = 0;
 	ViewProjection viewProjection_;
@@ -88,6 +92,7 @@ private: // メンバ変数
 	std::vector<std::vector<WorldTransform*>> worldTransformBlocks_;
 	// std::vector <std::vector<WorldTransform*>> worldTransformBlocks_;
 	bool isDebugCameraActive_ = false;
+	bool finished_ = false;
 	DebugCamera* debugCamera_ = nullptr;
 
 	/// <summary>

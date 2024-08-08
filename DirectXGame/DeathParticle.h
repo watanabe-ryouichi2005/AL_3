@@ -10,7 +10,7 @@ class DeathParticle{
 void Init(ViewProjection* viewProjection,Vector3 position);
 void Update();
 void Draw();
-
+bool IsFinished(){return isFinished_;};
 private:
 
 static inline const uint32_t kNumParticle = 8;

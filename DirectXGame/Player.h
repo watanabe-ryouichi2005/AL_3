@@ -50,6 +50,7 @@ public:
 	const Vector3& GetVerosity();
 	Vector3 GetWorldPosition();
 	AABB GetAABB();
+	bool GetIsDead()const {return IsDead;};
 	 void OnCollision(const Enemy* enemy);
 	 void SetMapChipField(MapChipField* newMapChipField_);
 
@@ -97,6 +98,8 @@ private:
 	bool onGround_ = true;
 	// 着地フラグ
 	bool landing = false;
+	//死亡フラグ
+	bool IsDead = false;
 	// 重力加速度（下方向）
 	static inline const float kGravityAcceleration = 0.98f;
 	// 最大落下速度（下方向）
