@@ -11,6 +11,8 @@ enum class Scene {
 	kUnknown = 0,
 	kTitle = 1,
 	kGame = 2,
+	GameOver =3,
+
 
 };
 Scene scene = Scene::kTitle;

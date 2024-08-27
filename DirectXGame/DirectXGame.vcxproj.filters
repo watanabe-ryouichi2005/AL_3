@@ -49,7 +49,7 @@
     <Filter Include="ソース ファイル\2d">
       <UniqueIdentifier>{814a0f6d-f847-4c45-856d-4688fa4c9e6c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダー ファイル\math\base">
+    <Filter Include="ヘッダー ファイル\base">
       <UniqueIdentifier>{74394124-7d35-4440-8404-7b478262b455}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -96,6 +96,9 @@
     <ClCompile Include="TitleScene.cpp">
       <Filter>ソース ファイル\scene</Filter>
     </ClCompile>
+    <ClCompile Include="GameOver.cpp">
+      <Filter>ソース ファイル\scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="3d\ViewProjection.h">
@@ -138,16 +141,16 @@
       <Filter>ヘッダー ファイル\audo</Filter>
     </ClInclude>
     <ClInclude Include="base\DirectXCommon.h">
-      <Filter>ヘッダー ファイル\math\base</Filter>
+      <Filter>ヘッダー ファイル\base</Filter>
     </ClInclude>
     <ClInclude Include="base\SafeDelete.h">
-      <Filter>ヘッダー ファイル\math\base</Filter>
+      <Filter>ヘッダー ファイル\base</Filter>
     </ClInclude>
     <ClInclude Include="base\TextureManager.h">
-      <Filter>ヘッダー ファイル\math\base</Filter>
+      <Filter>ヘッダー ファイル\base</Filter>
     </ClInclude>
     <ClInclude Include="base\WinApp.h">
-      <Filter>ヘッダー ファイル\math\base</Filter>
+      <Filter>ヘッダー ファイル\base</Filter>
     </ClInclude>
     <ClInclude Include="scene\GameScene.h">
       <Filter>ヘッダー ファイル\scene</Filter>
@@ -183,7 +186,7 @@
       <Filter>ヘッダー ファイル\2d</Filter>
     </ClInclude>
     <ClInclude Include="base\StringUtility.h">
-      <Filter>ヘッダー ファイル\math\base</Filter>
+      <Filter>ヘッダー ファイル\base</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
       <Filter>ヘッダー ファイル\scene</Filter>
@@ -213,6 +216,9 @@
       <Filter>ヘッダー ファイル\scene</Filter>
     </ClInclude>
     <ClInclude Include="TitleScene.h">
+      <Filter>ヘッダー ファイル\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="GameOver.h">
       <Filter>ヘッダー ファイル\scene</Filter>
     </ClInclude>
   </ItemGroup>

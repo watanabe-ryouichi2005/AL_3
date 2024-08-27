@@ -308,6 +308,8 @@ void GameScene::Draw() {
 #pragma endregion
 }
 void GameScene::UpdateCamera() {
+	cameraController_->Update();
+
 	#ifdef _DEBUG
 	if (input_->TriggerKey(DIK_SPACE)) {
 		/*if (isDebugCameraActive_ == true)
