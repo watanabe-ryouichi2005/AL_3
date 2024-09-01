@@ -16,7 +16,7 @@ GameScene::~GameScene() {
 		delete enemy_;
 	}
 delete modelParticle_,delete player_, delete model_, delete modelBlock_, delete debugCamera_,
-	    delete mapChipField_,delete modelSkydome_,delete cameraController_;
+	    delete mapChipField_,delete modelSkydome_,delete cameraController_,delete goals_;
 	for (std::vector<WorldTransform*>& worldTransformBlockLine : worldTransformBlocks_)
 		for (WorldTransform* worldTrandformBlock : worldTransformBlockLine) {
 			delete worldTrandformBlock;
@@ -36,13 +36,18 @@ void GameScene::Initialize() {
 	modelBlock_ = Model::CreateFromOBJ("block");
 	modelSkydome_ = Model::CreateFromOBJ("sphere", true);
 	modelParticle_=Model::CreateFromOBJ("deathParticle",true);
+	modelGoals_ = Model::CreateFromOBJ("ClearBox",true);
+
 	worldTransform_.Initialize();
 	viewProjection_.Initialize();
-
+	Vector3 goalposition_ = mapChipField_->GetMapChipPositionByIndex(2,8);
 	cameraController_ = new CameraController();
 	mapChipField_ = new MapChipField;
 	player_ = new Player();
 	//enemy_ = new Enemy();
+	goals_ = new Goal();
+	goals_->Init(modelGoals_,&viewProjection_,goalposition_);
+	
 	skydome_ = new Skydome();
 	deathParticle_ = new DeathParticle();
 	Vector3 playerposition_ = mapChipField_->GetMapChipPositionByIndex(2, 18);
@@ -58,6 +63,9 @@ void GameScene::Initialize() {
 	//自機と敵
 	player_->Initialize(&viewProjection_,playerposition_);
 	Enemy* newEnemy = new Enemy();
+	/*for (int32_t i = 0; i < 3; ++i) {
+		enemyposition_ = mapChipField_->GetMapChipPositionByIndex(18+(i*2),18-(i*2));
+	}*/
 	Vector3 enemyposition_ = mapChipField_->GetMapChipPositionByIndex(25, 18);
 	newEnemy->init(&viewProjection_,enemyposition_ );
 	enemies_.push_back(newEnemy);
@@ -116,16 +124,27 @@ void GameScene::GenerateBlocks() {
 }
 void GameScene::CheckAllCollision()
 {
-	AABB aabb1,aabb2;
+	AABB aabb1,aabb2,aabb3;
 	
 aabb1 = player_->GetAABB();
-for (Enemy* enemy : enemies_) {
+for (auto* enemy : enemies_) {
 	aabb2 = enemy->GetAABB();
 	if (IsCollision(aabb1, aabb2)){
 		player_->OnCollision(enemy);
 	enemy->OnCollision(player_);
 
 	}
+
+}
+aabb3 = goals_->GetAABB();
+if (IsCollision(aabb1,aabb3)) {
+ 
+	goals_->OnCollision(player_);
+	if (goals_->IsGet()) {
+		finished_ = true;
+	}
+
+	
 
 }
 
@@ -147,6 +166,7 @@ switch (phase_) {
 	enemy->Update();
 
 	}
+	goals_->Update();
 			//カメラの更新
 	UpdateCamera();
 	// ブロックの更新
@@ -229,7 +249,10 @@ void GameScene::ChangePhase() {
 				deathParticle_->Init(&viewProjection_,deathParticlesPosition);
 
 			}
-			
+			if (goals_->IsGet()) {
+				phase_ = Phase::kClear;
+
+			}
 	break;
 
 		
@@ -238,7 +261,14 @@ void GameScene::ChangePhase() {
 		
 		
 		break;
+	case Phase::kClear:
+		
+		
+		
+		break;
+
 	}
+
 
 }
 void GameScene::Draw() {
@@ -275,6 +305,7 @@ void GameScene::Draw() {
 	for (Enemy* enemy : enemies_) {
 
 	enemy->Draw();
+
 	}
 	/// <summary>
 	/// ここに3Dオブジェクトの描画処理を追加できる
@@ -287,6 +318,7 @@ void GameScene::Draw() {
 			modelBlock_->Draw(*worldTransformBlock, viewProjection_);
 		}
 	}
+	goals_->Draw();
 	/// </summary>
 
 	// 3Dオブジェクト描画後処理

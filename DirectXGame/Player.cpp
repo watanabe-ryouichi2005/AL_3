@@ -101,7 +101,7 @@ CheckMapCollision(collisionMapinfo);
 	// 行列計算
 	worldTransform_.UpdetaMatrix();
 	// 行列を定数バッファに転送
-	worldTransform_.TransferMatrix();
+	//worldTransform_.TransferMatrix();
 
 
 }

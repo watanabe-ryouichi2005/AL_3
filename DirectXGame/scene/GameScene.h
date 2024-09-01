@@ -14,6 +14,7 @@
 #include "CameraController.h"
 #include "Enemy.h"
 #include "DeathParticle.h"
+#include "Goal.h"
 #include "Sprite.h"
 #include "SafeDelete.h"
 #include "ViewProjection.h"
@@ -54,11 +55,12 @@ public: // メンバ関数
 	void CheckAllCollision();
 	void ChangePhase();
 	bool IsFinished(){return finished_;};
+	bool GetClearFlag(){return clearFlag_;};
 private: // メンバ変数
 	enum class Phase {
 		kPlay,
 		kDeath,
-
+		kClear,
 	};
 
 	Phase phase_ ;
@@ -72,6 +74,8 @@ private: // メンバ変数
 	Model* modelPlayer_ = nullptr;
 	Model* modelEnemy_ = nullptr;
 	Model* modelParticle_ = nullptr;
+	Model* modelGoals_ = nullptr;
+
 
 	//自キャラ
 	Player* player_ = nullptr;
@@ -93,7 +97,9 @@ private: // メンバ変数
 	// std::vector <std::vector<WorldTransform*>> worldTransformBlocks_;
 	bool isDebugCameraActive_ = false;
 	bool finished_ = false;
+	bool clearFlag_ = false;
 	DebugCamera* debugCamera_ = nullptr;
+	Goal* goals_ = nullptr;
 
 	/// <summary>
 	/// ゲームシーン用

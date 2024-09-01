@@ -6,6 +6,8 @@ void Skydome::Initialize(Model* model, uint32_t texturHandle, ViewProjection* vi
 	model_ = model;
 	viewProjection_ = viewprojection;
 	worldTransform_.Initialize();
+	//viewProjection_->translation_.x = -200.0f;
+	
 
 }
 void Skydome::Update() {

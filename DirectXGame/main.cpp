@@ -7,17 +7,25 @@
 #include "TextureManager.h"
 #include "WinApp.h"
 #include"TitleScene.h"
+#include"GameOver.h"
+#include"GameClear.h"
+
 enum class Scene {
 	kUnknown = 0,
 	kTitle = 1,
 	kGame = 2,
 	GameOver =3,
+	GameClear = 4,
 
 
 };
 Scene scene = Scene::kTitle;
 	GameScene* gameScene = nullptr;
 	TitleScene* titleScene = nullptr;
+	GameOverScene* gameOver = nullptr;
+	GameClear * gameClear = nullptr;
+	
+	
 	void ChangeScene(){
 		switch (scene) {
 			case Scene::kTitle:
@@ -33,15 +41,46 @@ Scene scene = Scene::kTitle;
 				break;
 	
 			case Scene::kGame:
+				if (gameScene->GetClearFlag()) {
+					scene = Scene::GameClear;
+					delete gameScene;
+					gameScene = nullptr;
+					gameClear = new GameClear;
+					gameClear->Init();
+
+				}
 					if (gameScene->IsFinished()) {
-						scene = Scene::kTitle;
+						scene = Scene::GameOver;
 						delete gameScene;
 						gameScene = nullptr;
-						titleScene = new TitleScene;
-						titleScene->Init();
+						gameOver = new GameOverScene;
+						gameOver->Init();
 
 					}
 					break;
+					
+			case Scene::GameOver:
+				if (gameOver->IsFinished()) {
+					scene = Scene::kTitle;
+					delete gameOver;
+					gameOver = nullptr;
+					titleScene = new TitleScene;
+					titleScene->Init();
+				}
+				break;
+				
+			case Scene::GameClear:
+					if (gameClear->IsFinished()) {
+						scene = Scene::kTitle;
+						delete gameClear;
+						titleScene = new TitleScene;
+						titleScene->Init();
+					}
+				
+				
+				
+				break;
+
 		}
 	}
 	void UpdateScene() {
@@ -56,6 +95,15 @@ Scene scene = Scene::kTitle;
 		
 			gameScene->Update();
 			break;	
+			
+		case Scene::GameOver:
+			gameOver->Update();
+
+			break;
+			case Scene::GameClear:
+				gameClear->Update();
+				break;
+
 		}
 	}
 	void DrawScene(){
@@ -68,7 +116,15 @@ Scene scene = Scene::kTitle;
 		case Scene::kGame:
 		
 			gameScene->Draw();
-			break;	
+			break;
+			
+		case Scene::GameOver:
+			gameOver->Draw();
+			break;
+			
+		case Scene::GameClear:
+				gameClear->Draw();
+				break;
 		}
 	}
 // Windowsアプリでのエントリーポイント(main関数)
