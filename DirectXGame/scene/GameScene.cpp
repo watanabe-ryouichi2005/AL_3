@@ -141,7 +141,7 @@ if (IsCollision(aabb1,aabb3)) {
  
 	goals_->OnCollision(player_);
 	if (goals_->IsGet()) {
-		finished_ = true;
+		clearFlag_ = true;
 	}
 
 	

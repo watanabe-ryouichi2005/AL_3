@@ -41,14 +41,6 @@ Scene scene = Scene::kTitle;
 				break;
 	
 			case Scene::kGame:
-				if (gameScene->GetClearFlag()) {
-					scene = Scene::GameClear;
-					delete gameScene;
-					gameScene = nullptr;
-					gameClear = new GameClear;
-					gameClear->Init();
-
-				}
 					if (gameScene->IsFinished()) {
 						scene = Scene::GameOver;
 						delete gameScene;
@@ -56,6 +48,16 @@ Scene scene = Scene::kTitle;
 						gameOver = new GameOverScene;
 						gameOver->Init();
 
+			
+					}else if (gameScene->GetClearFlag()) { 
+						
+					scene = Scene::GameClear;
+					delete gameScene;
+					gameScene = nullptr;
+					gameClear = new GameClear;
+					gameClear->Init();
+
+				
 					}
 					break;
 					
